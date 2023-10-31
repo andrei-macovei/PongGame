@@ -3,6 +3,7 @@ from turtle import Screen, Turtle
 from paddle import Paddle
 from ball import Ball
 from score import Score
+import sys
 
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 600
@@ -12,8 +13,16 @@ LEFT_PADDLE_Y = 0
 RIGHT_PADDLE_X = 450
 RIGHT_PADDLE_Y = 0
 
+game_is_on = True
+
+
+def end_program():
+    global game_is_on
+    game_is_on = False
+
 
 def main():
+    global game_is_on
     screen = Screen()
     screen.setup(width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
     screen.bgcolor("black")
@@ -35,8 +44,6 @@ def main():
             line.pendown()
         line.forward(20)
 
-    game_is_on = True
-
     # initialize paddles
     paddle1 = Paddle(LEFT_PADDLE_X, LEFT_PADDLE_Y)
     paddle2 = Paddle(RIGHT_PADDLE_X, RIGHT_PADDLE_Y)
@@ -51,6 +58,7 @@ def main():
     screen.onkey(paddle1.down, "s")
     screen.onkey(paddle2.up, "Up")
     screen.onkey(paddle2.down, "Down")
+    screen.onkey(end_program, "e")
 
     while game_is_on:
         time.sleep(ball.move_speed)
@@ -77,7 +85,7 @@ def main():
             paddle2.refresh(RIGHT_PADDLE_X, RIGHT_PADDLE_Y)
             time.sleep(2)
 
-    screen.exitonclick()
+    # screen.exitonclick()
 
 
 if __name__ == '__main__':

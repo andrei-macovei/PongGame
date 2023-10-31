@@ -1,7 +1,7 @@
 from turtle import Turtle
 import random
 
-POSSIBLE_HEADINGS = [45, 135, 225, 315]
+# POSSIBLE_HEADINGS = [45, 135, 225, 315]
 
 START_MOVE_SPEED = 0.02
 
