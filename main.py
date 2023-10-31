@@ -4,12 +4,12 @@ from paddle import Paddle
 from ball import Ball
 from score import Score
 
-SCREEN_WIDTH = 1200
+SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 600
 
-LEFT_PADDLE_X = -550
+LEFT_PADDLE_X = -450
 LEFT_PADDLE_Y = 0
-RIGHT_PADDLE_X = 550
+RIGHT_PADDLE_X = 450
 RIGHT_PADDLE_Y = 0
 
 
@@ -47,28 +47,28 @@ def main():
     score_player_right = Score(60, SCREEN_HEIGHT/2 - 70)
 
     screen.listen()
-    screen.onkey(paddle1.up, "W")
-    screen.onkey(paddle1.down, "S")
+    screen.onkey(paddle1.up, "w")
+    screen.onkey(paddle1.down, "s")
     screen.onkey(paddle2.up, "Up")
     screen.onkey(paddle2.down, "Down")
 
     while game_is_on:
-        # time.sleep(0.1)
+        time.sleep(ball.move_speed)
         screen.update()
         ball.move()
 
         # Detect ball collision with walls
-        if ball.ycor() > SCREEN_HEIGHT/2 or ball.ycor() < -SCREEN_HEIGHT/2:
+        if ball.ycor() > (SCREEN_HEIGHT/2 - 10) or ball.ycor() < -(SCREEN_HEIGHT/2 - 10):
             ball.manage_wall_collision()
 
         # Detect ball collsion with paddle
-        if (ball.distance(paddle1) < 30 and ball.xcor() <= -540) or \
-                (ball.distance(paddle2) < 30 and ball.xcor() >= 540):
+        if (ball.distance(paddle1) < 30 and ball.xcor() <= LEFT_PADDLE_X + 10) or \
+                (ball.distance(paddle2) < 30 and ball.xcor() >= (RIGHT_PADDLE_X - 10)):
             ball.manage_paddle_collision()
 
         # Detect if ball is behind any paddle
-        if ball.xcor() < -580 or ball.xcor() > 580:
-            if ball.xcor() < -580:
+        if ball.xcor() < LEFT_PADDLE_X - 30 or ball.xcor() > RIGHT_PADDLE_X + 30:
+            if ball.xcor() < LEFT_PADDLE_X - 30:
                 score_player_right.increase_score()
             else:
                 score_player_left.increase_score()
